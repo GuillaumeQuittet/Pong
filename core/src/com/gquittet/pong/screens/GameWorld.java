@@ -1,14 +1,13 @@
 package com.gquittet.pong.screens;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.gquittet.pong.assets.AssetLoader;
 import com.gquittet.pong.helpers.Collisions;
+import com.gquittet.pong.logs.Log;
 import com.gquittet.pong.objects.Ball;
 import com.gquittet.pong.objects.Bat;
 import com.gquittet.pong.objects.ScoreBoard;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameWorld {
 
@@ -37,6 +36,8 @@ public class GameWorld {
     }
 
     private void start() {
+        if (scoreBoard.getBatLeftScore() > 9 || scoreBoard.getBatRightScore() > 9)
+            Log.fatal("Fin du jeu");
         wallCount = 0;
         if (lastBatID == 1)
             ball.setDirection(speed, 0);
@@ -45,12 +46,12 @@ public class GameWorld {
         lastBatID = 0;
         ball.setPosition(new Vector2((gameWidth - ball.getWidth())/2, (gameWidth - ball.getWidth())/2));
         Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 ball.setPause(false);
             }
-        }, 2000);
+        }, 2f);
     }
 
     public void update(float delta) {

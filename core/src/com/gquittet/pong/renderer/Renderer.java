@@ -96,8 +96,8 @@ public class Renderer {
     private void drawScoreBoard() {
         spriteBatch.begin();
         spriteBatch.enableBlending();
-        AssetLoader.textFont.draw(spriteBatch, Integer.toString(scoreBoard.getBatLeftScore()), 50, 10);
-        AssetLoader.textFont.draw(spriteBatch, Integer.toString(scoreBoard.getBatRightScore()), 92, 10);
+        AssetLoader.textFont.draw(spriteBatch, Integer.toString(scoreBoard.getBatLeftScore()), 28, 10);
+        AssetLoader.textFont.draw(spriteBatch, Integer.toString(scoreBoard.getBatRightScore()), 114, 10);
         spriteBatch.disableBlending();
         spriteBatch.end();
     }
