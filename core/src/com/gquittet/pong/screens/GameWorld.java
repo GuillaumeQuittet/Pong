@@ -71,7 +71,7 @@ public class GameWorld {
             AssetLoader.pongWall.play();
             wallCount++;
             if (wallCount >= 3) {
-                ball.setDirection(ball.getDirection().x * 2, ball.getDirection().y * 2);
+                ball.setDirection(ball.getDirection().x * 6, ball.getDirection().y);
                 wallCount = 0;
             }
         } else if (ball.getPosition().x <= 0) {
