@@ -2,7 +2,6 @@ package com.gquittet.pong.objects;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
-import com.gquittet.pong.helpers.Collisions;
 import com.gquittet.pong.logs.Log;
 
 /**
@@ -14,15 +13,18 @@ public class Bat extends Object {
 
     public boolean canUpdate;
     private boolean yDown;
+    private int id;
 
     /**
      * Make the bat
      * @param width - The width of the bat
      * @param height - The height of the bat
      * @param position - The position of the bat
+     * @param id - The id of the bat
      */
-    public Bat(int width, int height, Vector2 position) {
+    public Bat(int width, int height, Vector2 position, int id) {
         super(width, height, position);
+        this.id = id;
         yDown = true;
         canUpdate = false;
     }
@@ -53,32 +55,6 @@ public class Bat extends Object {
         }
     }
 
-    public void computeDirection(Ball ball, boolean isLeftBat) {
-        // Make a point with the bat Y center
-        float batCenterX;
-        if (isLeftBat)
-            batCenterX = 0f;
-        else
-            batCenterX = 160f;
-        float batCenterY = getPosition().y + getHeight()/2;
-        Vector2 a = new Vector2(batCenterX, batCenterY);
-        // Make a point with the ball center
-        float ballCenterX = ball.getPosition().x + ball.getWidth()/2;
-        float ballCenterY = ball.getPosition().y + ball.getHeight()/2;
-        Vector2 b = new Vector2(ballCenterX, ballCenterY);
-        // Get the line slope
-        float slope = Collisions.computeSlope(a, b);
-        // Get the angle from the slope: slope = tan(theta)
-        float theta = (float) Math.toDegrees(Math.atan(slope));
-        Log.info(Float.toString(theta));
-        // Compute the B vertices location: B (X, Y) and A is (0, 0)
-        ball.setDirection((float) (ball.getSpeed() * Math.cos(theta)), (float) (ball.getSpeed() * Math.sin(theta)));
-        if(ball.isGoToTheRight())
-            ball.setGoToTheRight(false);
-        else
-            ball.setGoToTheRight(true);
-    }
-
     /**
      * This function is called when the user down a key.
      * @param keyCode The id of the key.
@@ -92,5 +68,9 @@ public class Bat extends Object {
             yDown = true;
             canUpdate = true;
         }
+    }
+
+    public int getId() {
+        return id;
     }
 }

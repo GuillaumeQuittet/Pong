@@ -16,6 +16,8 @@ public class AssetLoader {
     public static Sound pongWall;
     public static BitmapFont textFont;
     private static List<Texture> texturesList = new ArrayList<Texture>();
+    private static List<BitmapFont> fonts = new ArrayList<BitmapFont>();
+    private static List<Sound> sounds = new ArrayList<Sound>();
 
     public static void load() {
         background = new Texture(Gdx.files.internal("background.png"));
@@ -24,14 +26,23 @@ public class AssetLoader {
 
         pongBat = Gdx.audio.newSound(Gdx.files.internal("sounds/pong_bat.wav"));
         pongWall = Gdx.audio.newSound(Gdx.files.internal("sounds/pong_wall.wav"));
+        sounds.add(pongBat);
+        sounds.add(pongWall);
 
         textFont = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
         textFont.getData().setScale(.25f, -.25f);
+        fonts.add(textFont);
     }
 
     public static void dispose() {
         for(Texture texture : texturesList) {
             texture.dispose();
+        }
+        for (BitmapFont font : fonts) {
+            font.dispose();
+        }
+        for (Sound sound : sounds) {
+            sound.dispose();
         }
     }
 

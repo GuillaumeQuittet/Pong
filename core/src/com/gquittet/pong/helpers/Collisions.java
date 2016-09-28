@@ -19,11 +19,10 @@ public class Collisions {
                 (ball.getPosition().y + ball.getHeight() >= bat.getPosition().y);
     }
 
-    public static boolean collides(Ball ball, Bat bat, boolean isBatLeft) {
-        boolean isBatRight = !isBatLeft;
-        if((ball.getPosition().x <= bat.getPosition().x + bat.getWidth()) && isBatLeft)
+    public static boolean collides(Ball ball, Bat bat) {
+        if ((ball.getPosition().x <= bat.getPosition().x + bat.getWidth()) && (bat.getId() == 1))
             return getCollides(ball, bat);
-        else if((ball.getPosition().x + ball.getWidth() >= bat.getPosition().x) && isBatRight)
+        else if ((ball.getPosition().x + ball.getWidth() >= bat.getPosition().x) && (bat.getId() == 2))
             return getCollides(ball, bat);
         return false;
     }

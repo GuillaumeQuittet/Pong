@@ -1,6 +1,7 @@
 package com.gquittet.pong.objects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.gquittet.pong.helpers.Collisions;
 import com.gquittet.pong.logs.Log;
 
 /**
@@ -12,7 +13,6 @@ public class Ball extends Object {
 
     private float speed;
     private Vector2 direction;
-    private boolean goToTheRight;
     private boolean pause;
 
     /**
@@ -26,20 +26,44 @@ public class Ball extends Object {
     public Ball(int width, int height, Vector2 position, float speed, boolean goToTheRight) {
         super(width, height, position);
         this.speed = speed;
-        direction = new Vector2(1, 0);
-        this.goToTheRight = goToTheRight;
+        direction = new Vector2(speed, 0);
         this.pause = false;
     }
 
     public void update(float delta) {
         if(!pause) {
-            if(goToTheRight)
-                setPosition(new Vector2(getPosition().x + direction.x, getPosition().y - direction.y));
-            else
-                setPosition(new Vector2(getPosition().x - direction.x, getPosition().y - direction.y));
+            setPosition(new Vector2(getPosition().x + direction.x, getPosition().y - direction.y));
             float ballSpeed = (float) Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.y, 2));
             Log.info("update the ball, speed: " + ballSpeed + " pixels/sec");
         }
+    }
+
+    public void computeDirection(Bat bat) {
+        // Make a point with the bat Y center
+        float batCenterX = 0;
+        if (bat.getId() == 1)
+            batCenterX = 0f;
+        else if (bat.getId() == 2)
+            batCenterX = 160f;
+        float batCenterY = bat.getPosition().y + bat.getHeight() / 2;
+        Vector2 a = new Vector2(batCenterX, batCenterY);
+        // Make a point with the ball center
+        float ballCenterX = getPosition().x + getWidth() / 2;
+        float ballCenterY = getPosition().y + getHeight() / 2;
+        Vector2 b = new Vector2(ballCenterX, ballCenterY);
+        // Get the line slope
+        float slope = 0;
+        if (bat.getId() == 1)
+            slope = Collisions.computeSlope(a, b);
+        else if (bat.getId() == 2)
+            slope = Collisions.computeSlope(b, a);
+        // Get the angle from the slope: slope = tan(theta)
+        float theta = (float) Math.toDegrees(Math.atan(slope));
+        // Compute the B vertices location: B (X, Y) and A is (0, 0)
+        if (bat.getId() == 1)
+            direction = new Vector2((float) (speed * Math.cos(theta)), (float) (speed * Math.sin(theta)));
+        else if (bat.getId() == 2)
+            direction = new Vector2((float) (-speed * Math.cos(theta)), (float) (speed * Math.sin(theta)));
     }
 
     public float getSpeed() {
@@ -57,14 +81,6 @@ public class Ball extends Object {
 
     public Vector2 getDirection() {
         return direction;
-    }
-
-    public boolean isGoToTheRight() {
-        return goToTheRight;
-    }
-
-    public void setGoToTheRight(boolean goToTheRight) {
-        this.goToTheRight = goToTheRight;
     }
 
     public boolean isPause() {

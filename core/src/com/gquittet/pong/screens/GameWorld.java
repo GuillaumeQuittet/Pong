@@ -18,6 +18,7 @@ public class GameWorld {
     private float gameWidth;
     private int wallCount;
     private float speed;
+    private int lastBatID;
 
     // The scoreboard
     private ScoreBoard scoreBoard;
@@ -26,17 +27,22 @@ public class GameWorld {
         int batWidth = 5;
         int batHeight = 20;
         gameWidth = 160;
-        batLeft = new Bat(batWidth, batHeight, new Vector2(0, 0));
-        batRight = new Bat(batWidth, batHeight, new Vector2(gameWidth - batWidth, 0));
+        batLeft = new Bat(batWidth, batHeight, new Vector2(0, 0), 1);
+        batRight = new Bat(batWidth, batHeight, new Vector2(gameWidth - batWidth, 0), 2);
         speed = 2f;
         ball = new Ball(5, 5, new Vector2(0, 0), speed, true);
         scoreBoard = new ScoreBoard();
+        lastBatID = 0;
         start();
     }
 
     private void start() {
         wallCount = 0;
-        ball.setDirection(speed, 0);
+        if (lastBatID == 1)
+            ball.setDirection(speed, 0);
+        else if (lastBatID == 2)
+            ball.setDirection(-speed, 0);
+        lastBatID = 0;
         ball.setPosition(new Vector2((gameWidth - ball.getWidth())/2, (gameWidth - ball.getWidth())/2));
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -55,23 +61,28 @@ public class GameWorld {
     }
 
     private void collides() {
-        if (Collisions.collides(ball, batLeft, true)) {
+        if (Collisions.collides(ball, batLeft)) {
             ball.setPosition(new Vector2(batLeft.getPosition().x + batLeft.getWidth(), ball.getPosition().y));
-            batLeft.computeDirection(ball, true);
+            ball.computeDirection(batLeft);
             AssetLoader.pongBat.play();
             wallCount = 0;
-        } else if (Collisions.collides(ball, batRight, false)) {
+            lastBatID = batLeft.getId();
+        } else if (Collisions.collides(ball, batRight)) {
             ball.setPosition(new Vector2(batRight.getPosition().x - ball.getWidth(), ball.getPosition().y));
-            batRight.computeDirection(ball, false);
+            ball.computeDirection(batRight);
             AssetLoader.pongBat.play();
             wallCount = 0;
+            lastBatID = batRight.getId();
         } else if ((ball.getPosition().y <= 0 || ball.getPosition().y + ball.getHeight() >= 144) &&
                 (ball.getPosition().x > 0 || ball.getPosition().x + ball.getWidth() < 144)) {
             ball.setDirection(ball.getDirection().x, -ball.getDirection().y);
             AssetLoader.pongWall.play();
             wallCount++;
             if (wallCount >= 3) {
-                ball.setDirection(ball.getDirection().x * 6, ball.getDirection().y);
+                if (lastBatID == 1)
+                    ball.setDirection(ball.getDirection().x + 2, ball.getDirection().y);
+                else if (lastBatID == 2)
+                    ball.setDirection(ball.getDirection().x - 2, ball.getDirection().y);
                 wallCount = 0;
             }
         } else if (ball.getPosition().x <= 0) {
@@ -99,5 +110,13 @@ public class GameWorld {
 
     public Ball getBall() {
         return ball;
+    }
+
+    public int getLastBatID() {
+        return lastBatID;
+    }
+
+    public void setLastBatID(int lastBatID) {
+        this.lastBatID = lastBatID;
     }
 }
