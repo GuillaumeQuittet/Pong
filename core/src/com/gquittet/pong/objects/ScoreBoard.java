@@ -26,19 +26,19 @@ public class ScoreBoard {
         batRightScore += 1;
     }
 
-    public void setBatLeftScore(int batLeftScore) {
-        this.batLeftScore = batLeftScore;
-    }
-
-    public void setBatRightScore(int batRightScore) {
-        this.batRightScore = batRightScore;
-    }
-
     public int getBatLeftScore() {
         return batLeftScore;
     }
 
+    public void setBatLeftScore(int batLeftScore) {
+        this.batLeftScore = batLeftScore;
+    }
+
     public int getBatRightScore() {
         return batRightScore;
+    }
+
+    public void setBatRightScore(int batRightScore) {
+        this.batRightScore = batRightScore;
     }
 }

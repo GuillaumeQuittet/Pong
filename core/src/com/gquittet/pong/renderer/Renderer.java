@@ -1,6 +1,5 @@
 package com.gquittet.pong.renderer;
 
-import static com.badlogic.gdx.Gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,6 +12,8 @@ import com.gquittet.pong.objects.Ball;
 import com.gquittet.pong.objects.Bat;
 import com.gquittet.pong.objects.ScoreBoard;
 import com.gquittet.pong.screens.GameWorld;
+
+import static com.badlogic.gdx.Gdx.gl;
 
 public class Renderer {
 

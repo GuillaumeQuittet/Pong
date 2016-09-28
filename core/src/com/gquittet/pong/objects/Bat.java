@@ -1,13 +1,9 @@
 package com.gquittet.pong.objects;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gquittet.pong.helpers.Collisions;
 import com.gquittet.pong.logs.Log;
-
-import java.security.cert.CollectionCertStoreParameters;
 
 /**
  * This class make the bat that is useful
@@ -16,8 +12,8 @@ import java.security.cert.CollectionCertStoreParameters;
  */
 public class Bat extends Object {
 
-    private boolean yDown;
     public boolean canUpdate;
+    private boolean yDown;
 
     /**
      * Make the bat
@@ -73,11 +69,8 @@ public class Bat extends Object {
         // Get the line slope
         float slope = Collisions.computeSlope(a, b);
         // Get the angle from the slope: slope = tan(theta)
-        float theta;
-        if(slope > 0)
-            theta = (float) Math.toDegrees(Math.atan(slope));
-        else
-            theta = (float) Math.toDegrees(Math.atan(-1/slope));
+        float theta = (float) Math.toDegrees(Math.atan(slope));
+        Log.info(Float.toString(theta));
         // Compute the B vertices location: B (X, Y) and A is (0, 0)
         ball.setDirection((float)(ball.getSpeed() * Math.cos(theta)), (float)(ball.getSpeed() * Math.sin(theta)));
         if(ball.isGoToTheRight())

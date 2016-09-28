@@ -1,10 +1,8 @@
 package com.gquittet.pong.screens;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.gquittet.pong.assets.AssetLoader;
 import com.gquittet.pong.helpers.Collisions;
-import com.gquittet.pong.logs.Log;
 import com.gquittet.pong.objects.Ball;
 import com.gquittet.pong.objects.Bat;
 import com.gquittet.pong.objects.ScoreBoard;

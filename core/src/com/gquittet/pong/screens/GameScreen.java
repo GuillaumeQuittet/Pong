@@ -3,7 +3,6 @@ package com.gquittet.pong.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gquittet.pong.assets.AssetLoader;
 import com.gquittet.pong.helpers.InputHandler;
 import com.gquittet.pong.logs.Log;

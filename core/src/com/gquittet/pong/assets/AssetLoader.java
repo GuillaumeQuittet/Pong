@@ -1,21 +1,21 @@
 package com.gquittet.pong.assets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AssetLoader {
 
     public static Texture background;
-    private static List<Texture> texturesList = new ArrayList<Texture>();
     public static Sound pongBat;
     public static Sound pongWall;
     public static BitmapFont textFont;
+    private static List<Texture> texturesList = new ArrayList<Texture>();
 
     public static void load() {
         background = new Texture(Gdx.files.internal("background.png"));

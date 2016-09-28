@@ -1,7 +1,5 @@
 package com.gquittet.pong.objects;
 
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gquittet.pong.logs.Log;
 
@@ -57,16 +55,16 @@ public class Ball extends Object {
         direction.y = y;
     }
 
-    public void setGoToTheRight(boolean goToTheRight) {
-        this.goToTheRight = goToTheRight;
-    }
-
     public Vector2 getDirection() {
         return direction;
     }
 
     public boolean isGoToTheRight() {
         return goToTheRight;
+    }
+
+    public void setGoToTheRight(boolean goToTheRight) {
+        this.goToTheRight = goToTheRight;
     }
 
     public boolean isPause() {
