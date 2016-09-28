@@ -30,7 +30,7 @@ public class GameWorld {
         batLeft = new Bat(batWidth, batHeight, new Vector2(0, 0), 1);
         batRight = new Bat(batWidth, batHeight, new Vector2(gameWidth - batWidth, 0), 2);
         speed = 2f;
-        ball = new Ball(5, 5, new Vector2(0, 0), speed, true);
+        ball = new Ball(5, 5, new Vector2(0, 0), speed);
         scoreBoard = new ScoreBoard();
         lastBatID = 0;
         start();

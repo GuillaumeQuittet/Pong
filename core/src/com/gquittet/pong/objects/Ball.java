@@ -21,9 +21,8 @@ public class Ball extends Object {
      * @param height - The height
      * @param position - The position of the up corner
      * @param speed - The speed
-     * @param goToTheRight - The condition to go to the right
      */
-    public Ball(int width, int height, Vector2 position, float speed, boolean goToTheRight) {
+    public Ball(int width, int height, Vector2 position, float speed) {
         super(width, height, position);
         this.speed = speed;
         direction = new Vector2(speed, 0);
