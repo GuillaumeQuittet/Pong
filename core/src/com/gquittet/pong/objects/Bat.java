@@ -72,7 +72,7 @@ public class Bat extends Object {
         float theta = (float) Math.toDegrees(Math.atan(slope));
         Log.info(Float.toString(theta));
         // Compute the B vertices location: B (X, Y) and A is (0, 0)
-        ball.setDirection((float)(ball.getSpeed() * Math.cos(theta)), (float)(ball.getSpeed() * Math.sin(theta)));
+        ball.setDirection((float) (ball.getSpeed() * Math.cos(theta)), (float) (ball.getSpeed() * Math.sin(theta)));
         if(ball.isGoToTheRight())
             ball.setGoToTheRight(false);
         else

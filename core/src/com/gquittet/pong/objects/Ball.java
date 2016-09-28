@@ -26,7 +26,7 @@ public class Ball extends Object {
     public Ball(int width, int height, Vector2 position, float speed, boolean goToTheRight) {
         super(width, height, position);
         this.speed = speed;
-        direction = new Vector2(speed, 0);
+        direction = new Vector2(1, 0);
         this.goToTheRight = goToTheRight;
         this.pause = false;
     }
@@ -34,11 +34,11 @@ public class Ball extends Object {
     public void update(float delta) {
         if(!pause) {
             if(goToTheRight)
-                setPosition(new Vector2(getPosition().x + direction.x, getPosition().y + direction.y));
+                setPosition(new Vector2(getPosition().x + direction.x, getPosition().y - direction.y));
             else
-                setPosition(new Vector2(getPosition().x - direction.x, getPosition().y + direction.y));
-            float speed = (float) Math.sqrt(Math.pow(direction.x, 2)+Math.pow(direction.y, 2));
-            Log.info("update the ball, speed: "+speed+" pixels/sec");
+                setPosition(new Vector2(getPosition().x - direction.x, getPosition().y - direction.y));
+            float ballSpeed = (float) Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.y, 2));
+            Log.info("update the ball, speed: " + ballSpeed + " pixels/sec");
         }
     }
 

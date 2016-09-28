@@ -16,6 +16,8 @@ public class GameWorld {
     private Bat batRight;
     private Ball ball;
     private float gameWidth;
+    private int wallCount;
+    private float speed;
 
     // The scoreboard
     private ScoreBoard scoreBoard;
@@ -26,13 +28,15 @@ public class GameWorld {
         gameWidth = 160;
         batLeft = new Bat(batWidth, batHeight, new Vector2(0, 0));
         batRight = new Bat(batWidth, batHeight, new Vector2(gameWidth - batWidth, 0));
-        ball = new Ball(5, 5, new Vector2(0, 0), 2f, true);
+        speed = 2f;
+        ball = new Ball(5, 5, new Vector2(0, 0), speed, true);
         scoreBoard = new ScoreBoard();
         start();
     }
 
     private void start() {
-        ball.setDirection(ball.getSpeed(), 0);
+        wallCount = 0;
+        ball.setDirection(speed, 0);
         ball.setPosition(new Vector2((gameWidth - ball.getWidth())/2, (gameWidth - ball.getWidth())/2));
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -55,14 +59,21 @@ public class GameWorld {
             ball.setPosition(new Vector2(batLeft.getPosition().x + batLeft.getWidth(), ball.getPosition().y));
             batLeft.computeDirection(ball, true);
             AssetLoader.pongBat.play();
+            wallCount = 0;
         } else if (Collisions.collides(ball, batRight, false)) {
             ball.setPosition(new Vector2(batRight.getPosition().x - ball.getWidth(), ball.getPosition().y));
             batRight.computeDirection(ball, false);
             AssetLoader.pongBat.play();
+            wallCount = 0;
         } else if ((ball.getPosition().y <= 0 || ball.getPosition().y + ball.getHeight() >= 144) &&
                 (ball.getPosition().x > 0 || ball.getPosition().x + ball.getWidth() < 144)) {
             ball.setDirection(ball.getDirection().x, -ball.getDirection().y);
             AssetLoader.pongWall.play();
+            wallCount++;
+            if (wallCount >= 3) {
+                ball.setDirection(ball.getDirection().x * 2, ball.getDirection().y * 2);
+                wallCount = 0;
+            }
         } else if (ball.getPosition().x <= 0) {
                 scoreBoard.increaseBatRightScore();
             ball.setPause(true);
